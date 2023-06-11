@@ -1,95 +1,60 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import styles from "./page.module.css";
+import { useState } from "react";
 
 export default function Home() {
+  const [theme, currentTheme] = useState("");
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main className={styles.parent}>
+      <section className={styles.containerLeft}>
+        <section className={styles.containerLeftInner}>
+          <div className={styles.header}>
+            <img src="/cloud.png" className={styles.mainWeather} />
+            <button>Change Theme</button>
+            <div className={styles.tempToggle}>
+              <p>C</p>
+              <p>F</p>
+            </div>
+          </div>
+          <div className={styles.currentWeather}>
+            <div className={styles.currentTemp}>26</div>
+            <div className={styles.cOrF}>C</div>
+          </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+          <div className={styles.date}>14th Mar 22</div>
+          <div className={styles.dayAndTime}>
+            <p className={styles.day}>Monday</p>
+            <p className={styles.time}>10:40 AM</p>
+          </div>
+          <div className={styles.weatherConditions}>
+            <section className={styles.wind}>
+              <img src="arrow.png" />
+              <p>Wind</p>
+              <p>10 km/h</p>
+            </section>
+            <div className={styles.verticalLine}> </div>
+            <section className={styles.humidity}>
+              <img src="rainDrop.png" />
+              <p>Hum</p>
+              <p>10 km/h</p>
+            </section>
+            <div className={styles.verticalLine}> </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+            <section className={styles.rain}>
+              <img src="smallCloud.png" />
+              <p>Rain</p>
+              <p>10 km/h</p>
+            </section>
+          </div>
+          <div>
+            <div className={styles.cardContainer}>
+              <p>25*C</p>
+              <img src="mediumCloud.png" />
+              <p>Tue</p>
+            </div>
+          </div>
+        </section>
+      </section>
+      <section className={styles.containerRight}></section>
     </main>
-  )
+  );
 }
