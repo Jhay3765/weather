@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import styles from "./page.module.css";
 import { useState } from "react";
+import { Card } from "./components/card";
 
 export default function Home() {
   const themes = [
@@ -63,16 +64,74 @@ export default function Home() {
               <p>10 km/h</p>
             </section>
           </div>
-          <div>
-            <div className={styles.cardContainer}>
-              <p>25*C</p>
-              <img src="mediumCloud.png" />
-              <p>Tue</p>
-            </div>
+          <div className={styles.cardContainer}>
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <img src="More.png" />
           </div>
         </section>
       </section>
-      <section className={styles.containerRight}></section>
+      <section className={styles.containerRight}>
+        <section className={styles.containerRightInner}>
+          <header className={styles.headerRight}>
+            <div className={styles.location}>
+              <div className={styles.locationLeft}>
+                <img src="location.png" />
+                <p>Jhansi, India</p>
+              </div>
+              <button className={styles.plusSign}></button>
+            </div>
+          </header>
+          <section className={styles.sunContainer}>
+            <div className={styles.sunriseContainer}>
+              <p>Sunrise</p>
+              <div className={styles.rightCard}>
+                <img src="Bars.png" />
+                <p>7:30Am</p>
+                <img src="weatherIcon.png" />
+              </div>
+            </div>
+            <div>
+              <p>Sunset</p>
+              <div className={styles.rightCard}>
+                <img src="Bars2.png" />
+                <p>5:45 Pm</p>
+                <img src="weatherIcon.png" />
+              </div>
+            </div>
+          </section>
+          <section className={styles.separation}>
+            <div className={styles.hLine}></div>
+            <div className={styles.circle}>
+              <p>i</p>
+            </div>
+          </section>
+          <section className={styles.box}>
+            <div>
+              <p>Humidity</p>
+              <p>38%</p>
+            </div>
+            <div>
+              <p>Chance of rain</p>
+              <p>2%</p>
+            </div>
+            <div>
+              <p>Air Quality</p>
+              <section>
+                <p>3/10</p>
+                <p>Moderate</p>
+              </section>
+            </div>
+            <div>
+              <p>Wind speed</p>
+              <p>3.8 km/h</p>
+            </div>
+          </section>
+        </section>
+      </section>
     </main>
   );
 }

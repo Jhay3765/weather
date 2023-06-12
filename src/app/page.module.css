@@ -14,6 +14,9 @@
   height: 90%;
 }
 .containerRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.074);
   width: 35%;
@@ -80,6 +83,7 @@
 }
 
 .weatherConditions {
+  line-height: 20px;
   font-weight: 300;
   font-size: 22px;
   align-items: center;
@@ -103,6 +107,16 @@
   width: 2px;
 }
 .cardContainer {
+  padding: 1em 1em;
+  overflow-x: hidden;
+
+  width: 100%;
+  gap: clamp(10px, 5vw, 40px);
+  display: flex;
+  align-items: center;
+}
+
+.card {
   font-size: 24px;
   align-items: center;
   display: flex;
@@ -113,4 +127,119 @@
   background: rgba(214, 214, 214, 0.4);
   box-shadow: 3px -2px 14px -1px rgba(255, 255, 255, 0.6);
   border-radius: 20px;
+}
+.location {
+  display: flex;
+  justify-content: space-between;
+}
+.plusSign {
+  border: none;
+  border-radius: 20px;
+  position: relative;
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+}
+
+.plusSign::before,
+.plusSign::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.plusSign::before {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.addButton {
+  border: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+}
+.separation {
+  padding: 4rem 0rem;
+  gap: 20px;
+  align-items: center;
+  display: flex;
+}
+.hLine {
+  flex-grow: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.23);
+}
+.circle {
+  font-style: italic;
+  font-size: 32px;
+  display: grid;
+  place-content: center;
+  background: rgba(255, 255, 255, 0.23);
+  height: 40px;
+  width: 40px;
+  border-radius: 360px;
+}
+.containerRightInner {
+  height: 90%;
+  width: 80%;
+}
+.sunContainer {
+  justify-content: space-between;
+  display: flex;
+}
+
+.sunriseContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.rightCard {
+  width: 140px;
+  height: 281px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.box {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+.box > div > p:first-child {
+  font-weight: 300;
+  font-size: 32px;
+}
+.box > div > p:nth-child(2) {
+  font-weight: 500;
+  font-size: 32px;
+}
+
+@media (max-width: 1000px) {
+  .parent {
+    overflow: visible;
+    flex-direction: column;
+  }
+  .containerRight {
+    height: auto;
+    width: 100%;
+  }
+  .containerLeft {
+    width: auto;
+    height: auto;
+  }
 }
