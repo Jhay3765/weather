@@ -2,6 +2,18 @@
   display: flex;
   height: 100%;
 }
+.theme {
+  border-radius: 10px;
+  font-size: 1.2rem;
+  padding: 1em 2em;
+  color: white;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.2s;
+}
+.theme:hover {
+  background: rgba(202, 202, 202, 0.25);
+}
 .containerLeft {
   height: 100%;
   display: flex;
@@ -60,8 +72,8 @@
   font-size: 164px;
 }
 .cOrF {
-  font-weight: 400;
-  font-size: 70px;
+  font-weight: 100;
+  font-size: 60px;
 }
 .date {
   line-height: 120%;
@@ -107,11 +119,11 @@
   width: 2px;
 }
 .cardContainer {
-  padding: 1em 1em;
+  padding: 5em 1em;
   overflow-x: hidden;
 
   width: 100%;
-  gap: clamp(10px, 5vw, 40px);
+  gap: clamp(10px, 5vw, 50px);
   display: flex;
   align-items: center;
 }
@@ -130,7 +142,15 @@
 }
 .location {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+.locationLeft {
+  font-weight: 300;
+  font-size: 32px;
+  gap: 10px;
+  align-items: center;
+  display: flex;
 }
 .plusSign {
   border: none;
@@ -170,7 +190,7 @@
   );
 }
 .separation {
-  padding: 4rem 0rem;
+  margin-top: 3em;
   gap: 20px;
   align-items: center;
   display: flex;
@@ -190,9 +210,12 @@
   width: 40px;
   border-radius: 360px;
 }
+.circle > p {
+  margin-right: 6px;
+}
 .containerRightInner {
   height: 90%;
-  width: 80%;
+  width: 70%;
 }
 .sunContainer {
   justify-content: space-between;
@@ -215,11 +238,14 @@
   justify-content: center;
 }
 .box {
+  line-height: 10px;
   text-align: center;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 5px;
+  gap: 10px;
+  row-gap: 40px;
 }
+
 .box > div > p:first-child {
   font-weight: 300;
   font-size: 32px;
@@ -235,8 +261,9 @@
     flex-direction: column;
   }
   .containerRight {
+    margin-top: 170px;
     height: auto;
-    width: 100%;
+    width: auto;
   }
   .containerLeft {
     width: auto;

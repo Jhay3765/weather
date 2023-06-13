@@ -1,67 +1,121 @@
-"use client";
-import { useEffect } from "react";
 import styles from "./page.module.css";
-import { useState } from "react";
 import { Card } from "./components/card";
+import { getWeather } from "./components/getData";
+import { ChangeTheme } from "./components/changeTheme";
+import { PlusSign } from "./components/PlusSign";
 
-export default function Home() {
-  const themes = [
-    "linear-gradient(243.18deg, #5CEBD1 0%, #1A2B2C 100%)",
-    "linear-gradient(243.18deg, #0C05E7 0%, #9B2FCD 100%)",
-    "linear-gradient(243.18deg, #BCC92D 0%, #48C1C9 100%)",
-    "linear-gradient(243.18deg, #9065BC 0%, rgba(255, 0, 108, 0.38) 100%)",
-    "linear-gradient(243.18deg, #1C565E 0%, #3DC7DA 100%)",
-    "linear-gradient(243.18deg, #00C236 0%, #40B845 100%)",
-  ];
-  const [themeIndex, setThemeIndex] = useState(0);
+export default async function Home() {
+  const weather = await getWeather("30043");
 
-  useEffect(() => {
-    document.body.style.background = themes[themeIndex];
-  }, [themeIndex]);
+  const func = () => {
+    const localTime = weather.location.localtime;
+    const dateObj = new Date(localTime);
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("en-US", { month: "short" });
+    const year = dateObj.toLocaleString("en-US", { year: "2-digit" });
+    const formattedTime = `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
 
-  const changeTheme = () => {
-    setThemeIndex((prevIndex) => (prevIndex + 1) % themes.length);
+    return formattedTime;
   };
+  function getOrdinalSuffix(day: any) {
+    if (day >= 11 && day <= 13) {
+      return "th";
+    }
+
+    const lastDigit = day % 10;
+    switch (lastDigit) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  }
+  function convertToRegularTime(time: string) {
+    // Split the time string into hours and minutes
+    let timeArray = time.split(":");
+    let hours = parseInt(timeArray[0]);
+    let minutes: number | string = parseInt(timeArray[1]);
+
+    // Determine if it's AM or PM
+    let period = hours >= 12 ? "PM" : "AM";
+
+    // Convert hours to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // If hours is 0, set it to 12
+
+    // Format minutes to have leading zero if needed
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    // Return the formatted time
+    return hours + ":" + minutes + " " + period;
+  }
+  function getDayOfWeek(number: string) {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const index = parseInt(number, 10) - 1;
+
+    if (Math.abs(index) >= 0 && Math.abs(index) < daysOfWeek.length) {
+      return daysOfWeek[Math.abs(index)];
+    } else {
+      return "Invalid input. Please enter a number between 1 and 7.";
+    }
+  }
+
   return (
     <main className={styles.parent}>
       <section className={styles.containerLeft}>
         <section className={styles.containerLeftInner}>
           <div className={styles.header}>
             <img src="/cloud.png" className={styles.mainWeather} />
-            <button onClick={changeTheme}>Change Theme</button>
+            <ChangeTheme />
             <div className={styles.tempToggle}>
               <p>C</p>
               <p>F</p>
             </div>
           </div>
           <div className={styles.currentWeather}>
-            <div className={styles.currentTemp}>26</div>
-            <div className={styles.cOrF}>C</div>
+            <div className={styles.currentTemp}>{weather.current.temp_f}</div>
+            <div className={styles.cOrF}>F</div>
           </div>
 
-          <div className={styles.date}>14th Mar 22</div>
+          <div className={styles.date}>{func()}</div>
           <div className={styles.dayAndTime}>
-            <p className={styles.day}>Monday</p>
-            <p className={styles.time}>10:40 AM</p>
+            <p className={styles.day}>{getDayOfWeek(weather.current.is_day)}</p>
+            <p className={styles.time}>
+              {convertToRegularTime(weather.location.localtime.slice(-5))}
+            </p>
           </div>
           <div className={styles.weatherConditions}>
             <section className={styles.wind}>
               <img src="arrow.png" />
               <p>Wind</p>
-              <p>10 km/h</p>
+              <p>{weather.current.wind_mph} mp/h</p>
             </section>
             <div className={styles.verticalLine}> </div>
             <section className={styles.humidity}>
               <img src="rainDrop.png" />
               <p>Hum</p>
-              <p>10 km/h</p>
+              <p>{weather.current.humidity}%</p>
             </section>
             <div className={styles.verticalLine}> </div>
 
             <section className={styles.rain}>
               <img src="smallCloud.png" />
               <p>Rain</p>
-              <p>10 km/h</p>
+              <p>
+                {weather.forecast.forecastday[0].day.daily_chance_of_rain} %
+              </p>
             </section>
           </div>
           <div className={styles.cardContainer}>
@@ -80,25 +134,38 @@ export default function Home() {
             <div className={styles.location}>
               <div className={styles.locationLeft}>
                 <img src="location.png" />
-                <p>Jhansi, India</p>
+                <p>{weather.location.name + "," + weather.location.region}</p>
               </div>
-              <button className={styles.plusSign}></button>
+
+              <PlusSign />
             </div>
           </header>
           <section className={styles.sunContainer}>
             <div className={styles.sunriseContainer}>
-              <p>Sunrise</p>
+              <p style={{ fontSize: "32px" }}> Sunrise</p>
               <div className={styles.rightCard}>
                 <img src="Bars.png" />
-                <p>7:30Am</p>
+                <p style={{ fontSize: "32px" }}>
+                  {convertToRegularTime(
+                    weather.forecast.forecastday[0].astro.sunrise
+                  ).slice(0, -2)}
+
+                  <span style={{ fontSize: "20px" }}>Am</span>
+                </p>
                 <img src="weatherIcon.png" />
               </div>
             </div>
             <div>
-              <p>Sunset</p>
+              <p style={{ fontSize: "32px" }}>Sunset</p>
               <div className={styles.rightCard}>
                 <img src="Bars2.png" />
-                <p>5:45 Pm</p>
+                <p style={{ fontSize: "28px" }}>
+                  {convertToRegularTime(
+                    weather.forecast.forecastday[0].astro.sunset
+                  ).slice(0, -2)}
+
+                  <span style={{ fontSize: "20px" }}>PM</span>
+                </p>
                 <img src="weatherIcon.png" />
               </div>
             </div>
@@ -112,22 +179,26 @@ export default function Home() {
           <section className={styles.box}>
             <div>
               <p>Humidity</p>
-              <p>38%</p>
+              <p>{weather.current.humidity} %</p>
             </div>
             <div>
               <p>Chance of rain</p>
-              <p>2%</p>
+              <p>{weather.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
             </div>
             <div>
               <p>Air Quality</p>
               <section>
-                <p>3/10</p>
-                <p>Moderate</p>
+                <p>{weather.current.air_quality["us-epa-index"]}/10</p>
+                <p>
+                  {weather.current.air_quality["us-epa-index"] < 5
+                    ? "Good"
+                    : "Moderate"}
+                </p>
               </section>
             </div>
             <div>
               <p>Wind speed</p>
-              <p>3.8 km/h</p>
+              <p>{weather.current.wind_mph} mp/h</p>
             </div>
           </section>
         </section>
