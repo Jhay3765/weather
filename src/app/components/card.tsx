@@ -1,11 +1,14 @@
 import styles from "../page.module.css";
-
-export const Card = () => {
+type weatherData = {
+  temp: number;
+  day: string;
+};
+export const Card = (params: weatherData) => {
   return (
     <div className={styles.card}>
-      <p>25*C</p>
+      <p>{params.temp} &deg;F</p>
       <img src="mediumCloud.png" />
-      <p>Tue</p>
+      <p>{params.day}</p>
     </div>
   );
 };

@@ -15,7 +15,7 @@ body {
   font-family: "Roboto", sans-serif;
   color: white;
   margin: 0;
-  height: 100vh;
-
+  min-height: 100vh;
+  overflow-x: hidden;
   background: linear-gradient(243.18deg, #0c05e7 0%, #9b2fcd 100%);
 }

@@ -5,7 +5,7 @@ import { ChangeTheme } from "./components/changeTheme";
 import { PlusSign } from "./components/PlusSign";
 
 export default async function Home() {
-  const weather = await getWeather("30043");
+  const weather = await getWeather("11205");
 
   const func = () => {
     const localTime = weather.location.localtime;
@@ -53,31 +53,40 @@ export default async function Home() {
     // Return the formatted time
     return hours + ":" + minutes + " " + period;
   }
-  function getDayOfWeek(number: string) {
+  function getDayOfWeek(newDate: string) {
     const daysOfWeek = [
+      "Saturday",
       "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday",
     ];
-    const index = parseInt(number, 10) - 1;
-
-    if (Math.abs(index) >= 0 && Math.abs(index) < daysOfWeek.length) {
-      return daysOfWeek[Math.abs(index)];
-    } else {
-      return "Invalid input. Please enter a number between 1 and 7.";
-    }
+    const date = new Date(newDate);
+    const day = date.getDay();
+    console.log(day);
+    return daysOfWeek[day];
   }
+
+  const theDay = (newDate: string) => {
+    const daysOfWeek = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+    const date = new Date(newDate);
+    const day = date.getDay();
+    console.log(day);
+    return daysOfWeek[day];
+  };
 
   return (
     <main className={styles.parent}>
       <section className={styles.containerLeft}>
         <section className={styles.containerLeftInner}>
           <div className={styles.header}>
-            <img src="/cloud.png" className={styles.mainWeather} />
+            <div className={styles.logoContainer}>
+              <img src="/cloud.png" className={styles.mainWeather} />
+              <h1>The Weather</h1>
+            </div>
+
             <ChangeTheme />
             <div className={styles.tempToggle}>
               <p>C</p>
@@ -86,7 +95,7 @@ export default async function Home() {
           </div>
           <div className={styles.currentWeather}>
             <div className={styles.currentTemp}>{weather.current.temp_f}</div>
-            <div className={styles.cOrF}>F</div>
+            <div className={styles.cOrF}>&deg;F</div>
           </div>
 
           <div className={styles.date}>{func()}</div>
@@ -119,12 +128,14 @@ export default async function Home() {
             </section>
           </div>
           <div className={styles.cardContainer}>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <img src="More.png" />
+            <Card
+              temp={weather.forecast.forecastday[0].day.avgtemp_f}
+              day={theDay(weather.forecast.forecastday[0].date)}
+            />
+            <Card
+              temp={weather.forecast.forecastday[1].day.avgtemp_f}
+              day={theDay(weather.forecast.forecastday[1].date)}
+            />
           </div>
         </section>
       </section>
